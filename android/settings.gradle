@@ -1,0 +1,3 @@
+rootProject.name = 'WTHRD'
+
+include ':app'
