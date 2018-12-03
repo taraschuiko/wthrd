@@ -1,26 +1,21 @@
 import React, { Component } from "react";
 import {
-  StyleSheet,
   View,
   ImageBackground,
   Image,
-  Dimensions,
   TouchableOpacity
 } from "react-native";
 import { AppText } from "./Typography";
+import styles from "./styles/header";
+import LinearGradient from 'react-native-linear-gradient';
 
 const imgUrl = "../data/img/";
 
 export default class Header extends Component {
-  state = {
-    city: "Dubai",
-    background: require(`${imgUrl}backgrounds/citySummerDay.png`),
-    person: require(`${imgUrl}menu.png`)
-  };
-
-  render() {
+render() {
+    const { currentCityPretty, appearance, weather, error } = this.props;
     return (
-      <ImageBackground source={this.state.background} style={styles.background}>
+      <View style={{backgroundColor: appearance.backgroundColor}}>
       {/* Top bar */}
         <View style={styles.topBar}>
           <View style={{flex: 1}}>
@@ -33,7 +28,7 @@ export default class Header extends Component {
             </TouchableOpacity>
           </View>
           <View style={{flex: 1}}>
-            <AppText style={styles.topBarText}>{this.state.city}</AppText>
+            <AppText style={styles.topBarText}>{currentCityPretty}</AppText>
           </View>
           <View style={{flex: 1}}>
             <TouchableOpacity>
@@ -45,31 +40,26 @@ export default class Header extends Component {
             </TouchableOpacity>
           </View>
         </View>
-      </ImageBackground>
+        {/* Header content */}
+        <View style={styles.headerContent}>
+          <AppText style={styles.nowText}>NOW</AppText>
+          {(weather.weatherPrimary != "") && <AppText style={styles.weatherPrimary}>{weather.weatherPrimary}</AppText>}
+          {/* <AppText style={styles.weatherPrimary}>
+            {weather.weatherPrimary}
+          </AppText> */}
+          <AppText style={styles.temperatureText}>
+            {weather.temperature}°
+          </AppText>
+          <Image source={require(`../data/img/sun.png`)} style={styles.sun} />
+          <AppText>
+            Feels like {weather.feelslike}°
+          </AppText>
+          {error && <AppText style={{marginTop: 12}}>Sorry. We couldn't load the information</AppText>}
+          <ImageBackground source={appearance.background} style={styles.backgroundCity}>
+            <Image source={appearance.person} />
+          </ImageBackground>
+        </View>
+      </View>
     );
   }
 }
-
-let { height, width } = Dimensions.get("window");
-
-const styles = StyleSheet.create({
-  background: {
-    padding: 16
-  },
-  topBar: {
-    flex: 1,
-    // width: width,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignContent: "stretch"
-  },
-  topBarText: {
-    color: "#ffffff",
-    fontSize: 20,
-    textAlign: 'center'
-  },
-  topBarIcon: {
-    width: 16,
-    height: '100%'
-  }
-});

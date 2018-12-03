@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, StyleSheet } from 'react-native';
-BASE_FONT = 'museo';
+BASE_FONT = 'museo-300';
 export class AppText extends Component {
   render() {
     return (
@@ -12,5 +12,6 @@ const styles = StyleSheet.create({
   myAppText: {
     fontFamily: BASE_FONT,
     fontSize: 16,
+    color: "#ffffff",
   },
 });
